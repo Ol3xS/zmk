@@ -1,0 +1,14 @@
+file_format: "1"
+id: place_hd
+name: place_hd
+type: shield
+url: 
+requires: [pro_micro]
+exposes: [nice_view]
+features:
+  - keys
+  - display
+  - encoder
+siblings:
+  - place_hd_left
+  - place_hd_right

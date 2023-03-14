@@ -1,0 +1,17 @@
+
+if SHIELD_PLACE_HD_LEFT
+
+config ZMK_KEYBOARD_NAME
+	default "Place_HD"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+	default y
+
+endif
+
+if SHIELD_PLACE_HD_LEFT || SHIELD_PLACE_HD_RIGHT
+
+config ZMK_SPLIT
+	default y
+
+endif
