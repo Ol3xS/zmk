@@ -327,7 +327,7 @@ int zmk_keymap_position_state_changed(uint8_t source, uint32_t position, bool pr
 }
 
 #if ZMK_KEYMAP_HAS_SENSORS
-int zmk_keymap_sensor_triggered(uint8_t sensor_number, const struct sensor_value value,
+inline static int zmk_keymap_sensor_triggered(uint8_t sensor_number, const struct sensor_value value,
                                 int64_t timestamp) {
     for (int layer = ZMK_KEYMAP_LAYERS_LEN - 1; layer >= _zmk_keymap_layer_default; layer--) {
         if (zmk_keymap_layer_active(layer) && zmk_sensor_keymap[layer] != NULL) {

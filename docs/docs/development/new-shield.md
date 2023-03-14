@@ -6,9 +6,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import KeymapExampleFile from '../keymap-example-file.md';
 
-import InterconnectTabs from "@site/src/components/interconnect-tabs";
-import Metadata from "@site/src/data/hardware-metadata.json";
-
 ## Overview
 
 This guide will walk through the steps necessary to add ZMK support for a keyboard the uses a (Pro Micro compatible) addon MCU board to provide the microprocessor.
@@ -80,7 +77,7 @@ which controls the display name of the device over USB and BLE.
 The updated new default values should always be wrapped inside a conditional on the shield config name defined in the `Kconfig.shield` file. Here's the simplest example file.
 
 :::warning
-The keyboard name must be less than or equal to 16 characters in length, otherwise the bluetooth advertising might fail and you will not be able to find your keyboard from your device.
+Do not make the keyboard name too long, otherwise the bluetooth advertising might fail and you will not be able to find your keyboard from your laptop / tablet.
 :::
 
 ```
@@ -118,7 +115,9 @@ endif
 
 ## Shield Overlays
 
-<InterconnectTabs items={Metadata}/>
+![Labelled Pro Micro pins](../assets/pro-micro/pro-micro-pins-labelled.jpg)
+
+ZMK uses the blue color coded pin names to generate devicetree node references. For example, to refer to the node `0` in the devicetree files, use `&pro_micro 0`.
 
 <Tabs
 defaultValue="unibody"
@@ -157,8 +156,6 @@ this might look something like:
 	};
 };
 ```
-
-See the [Keyboard Scan configuration documentation](../config/kscan.md) for details on configuring the KSCAN driver.
 
 </TabItem>
 
@@ -263,8 +260,6 @@ This is exemplified with the iris .overlay files.
 
 ```
 
-See the [Keyboard Scan configuration documentation](../config/kscan.md) for details on configuring the KSCAN driver.
-
 ### .conf files (Split Shields)
 
 While unibody boards only have one .conf file that applies configuration characteristics to the entire keyboard,
@@ -345,8 +340,6 @@ Some important things to note:
 - The `#include <dt-bindings/zmk/matrix_transform.h>` is critical. The `RC` macro is used to generate the internal storage in the matrix transform, and is actually replaced by a C preprocessor before the final devicetree is compiled into ZMK.
 - `RC(row, column)` is placed sequentially to define what row and column values that position corresponds to.
 - If you have a keyboard with options for `2u` keys in certain positions, or break away portions, it is a good idea to set the chosen `zmk,matrix_transform` to the default arrangement, and include _other_ possible matrix transform nodes in the devicetree that users can select in their user config by overriding the chosen node.
-
-See the [matrix transform section](../config/kscan.md#matrix-transform) in the Keyboard Scan configuration documentation for details and more examples of matrix transforms.
 
 ## Default Keymap
 
@@ -438,7 +431,6 @@ left_encoder: encoder_left {
 		a-gpios = <PIN_A (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		b-gpios = <PIN_B (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		resolution = <4>;
-		status = "disabled";
 	};
 ```
 
